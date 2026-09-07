@@ -29,7 +29,22 @@ declare global {
 // Fehler entsteht dann sauber bei der ersten echten Anfrage, nicht beim Import.
 const connectionString = process.env.DATABASE_URL || "postgres://unset:unset@localhost:5432/unset";
 
-const client = global.__pgClient__ ?? postgres(connectionString, { max: 10 });
+const client =
+  global.__pgClient__ ??
+  postgres(connectionString, {
+    max: 10,
+    // Supabase's connection pooler (port 6543, PgBouncer in "transaction"
+    // mode) does not support prepared statements — postgres.js uses them by
+    // default, which causes runtime errors against that pooler. This is
+    // harmless against a direct Postgres connection (port 5432) too, so it's
+    // safe to always disable.
+    prepare: false,
+    // Most managed Postgres providers (Supabase, Neon, Railway, ...) require
+    // TLS, while a plain local Postgres usually has none configured at all.
+    // "prefer" tries TLS first and transparently falls back if the server
+    // doesn't offer it, so the same setting works in both situations.
+    ssl: "prefer",
+  });
 if (process.env.NODE_ENV !== "production") global.__pgClient__ = client;
 
 export const db = drizzle(client, { schema });
