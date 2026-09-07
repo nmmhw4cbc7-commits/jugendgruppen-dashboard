@@ -32,6 +32,8 @@ export async function deleteAnliegen(id: string) {
 }
 
 export async function getAdminSuggestions(groupId: string) {
+  const voteCountExpr = sql<number>`(select count(*) from suggestion_votes sv where sv.suggestion_id = ${suggestions.id})`;
+
   const rows = await db
     .select({
       id: suggestions.id,
@@ -40,12 +42,12 @@ export async function getAdminSuggestions(groupId: string) {
       description: suggestions.description,
       createdAt: suggestions.createdAt,
       memberName: members.name,
-      voteCount: sql<number>`(select count(*) from suggestion_votes sv where sv.suggestion_id = ${suggestions.id})`,
+      voteCount: voteCountExpr,
     })
     .from(suggestions)
     .innerJoin(members, eq(suggestions.memberId, members.id))
     .where(eq(suggestions.groupId, groupId))
-    .orderBy(desc(sql`voteCount`));
+    .orderBy(desc(voteCountExpr));
 
   return rows;
 }
