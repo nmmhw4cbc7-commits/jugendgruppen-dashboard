@@ -4,7 +4,8 @@ import { getAdminEvents } from "@/lib/actions/admin-events";
 import AdminShell from "@/components/admin/AdminShell";
 import Link from "next/link";
 import EmptyState from "@/components/EmptyState";
-import { EVENT_TYPE_EMOJI, EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EventTypeIcon } from "@/components/icons";
 import EventRowActions from "./event-row-actions";
 
 export default async function AdminTerminePage() {
@@ -36,8 +37,9 @@ export default async function AdminTerminePage() {
                   {formatDateRange(e.startDate, e.endDate)}
                   {e.startTime && ` · ${e.startTime}`}
                 </p>
-                <p className="text-[15px] font-medium text-ink mt-0.5">
-                  {EVENT_TYPE_EMOJI[e.type]} {e.title}
+                <p className="text-[15px] font-medium text-ink mt-0.5 flex items-center gap-1.5">
+                  <EventTypeIcon type={e.type} />
+                  {e.title}
                 </p>
                 <div className="flex items-center gap-2 mt-1.5">
                   <span className="pill bg-accent-soft text-accent-dark">
