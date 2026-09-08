@@ -1,7 +1,8 @@
 import { getCurrentMember } from "@/lib/session";
 import { getUpcomingEventsForGroup } from "@/lib/actions/home";
 import { redirect } from "next/navigation";
-import { EVENT_TYPE_EMOJI, EVENT_TYPE_LABEL, formatDateRange, greeting } from "@/lib/format";
+import { EVENT_TYPE_LABEL, formatDateRange, greeting } from "@/lib/format";
+import { EventTypeIcon, FireIcon } from "@/components/icons";
 import RsvpButtons from "@/components/RsvpButtons";
 import EventCard from "@/components/EventCard";
 import EmptyState from "@/components/EmptyState";
@@ -35,8 +36,9 @@ export default async function NeuesPage() {
             <p className="text-[13.5px] text-subtle">
               {formatDateRange(next.startDate, next.endDate)}
             </p>
-            <p className="text-[21px] font-semibold text-ink mt-1.5 leading-snug">
-              {EVENT_TYPE_EMOJI[next.type]} {next.title}
+            <p className="text-[21px] font-semibold text-ink mt-1.5 leading-snug flex items-center gap-2">
+              <EventTypeIcon type={next.type} className="h-5 w-5 shrink-0" />
+              {next.title}
             </p>
             <p className="text-subtle text-[14.5px] mt-1">
               {next.startTime && `${next.startTime} Uhr`}
@@ -55,7 +57,10 @@ export default async function NeuesPage() {
             {next.afterActivity && (
               <div className="mt-4 pt-4 border-t border-line">
                 <p className="text-[12.5px] font-medium text-subtle mb-0.5">Danach</p>
-                <p className="text-[14.5px] text-ink">🔥 {next.afterActivity}</p>
+                <p className="text-[14.5px] text-ink flex items-center gap-1.5">
+                  <FireIcon />
+                  {next.afterActivity}
+                </p>
               </div>
             )}
 
