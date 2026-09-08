@@ -2,6 +2,7 @@ import { listGroups } from "@/lib/actions/onboarding";
 import { getCurrentMember } from "@/lib/session";
 import { redirect } from "next/navigation";
 import OnboardingForm from "./onboarding-form";
+import { WaveIcon } from "@/components/icons";
 
 export default async function OnboardingPage() {
   const member = await getCurrentMember();
@@ -12,7 +13,7 @@ export default async function OnboardingPage() {
   return (
     <main className="min-h-dvh flex flex-col justify-center px-6 py-12 max-w-md mx-auto">
       <div className="mb-10">
-        <p className="text-3xl mb-3">👋</p>
+        <WaveIcon className="h-9 w-9 text-ink mb-3" />
         <h1 className="text-[26px] font-semibold tracking-tight text-ink leading-snug">
           Willkommen
         </h1>
