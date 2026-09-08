@@ -56,10 +56,3 @@ export const EVENT_TYPE_LABEL: Record<string, string> = {
   action: "Aktion",
   trip: "Ausflug",
 };
-
-export const EVENT_TYPE_EMOJI: Record<string, string> = {
-  group_meeting: "📖",
-  activity: "🎯",
-  action: "🧹",
-  trip: "🧳",
-};
