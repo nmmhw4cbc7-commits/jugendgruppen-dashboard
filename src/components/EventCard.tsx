@@ -1,4 +1,5 @@
-import { EVENT_TYPE_EMOJI, EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EventTypeIcon } from "@/components/icons";
 import RsvpButtons from "./RsvpButtons";
 
 type EventLike = {
@@ -24,8 +25,9 @@ export default function EventCard({ event }: { event: EventLike }) {
             {formatDateRange(event.startDate, event.endDate)}
             {event.startTime && ` · ${event.startTime} Uhr`}
           </p>
-          <p className="font-medium text-ink text-[15.5px] leading-snug">
-            {EVENT_TYPE_EMOJI[event.type]} {event.title}
+          <p className="font-medium text-ink text-[15.5px] leading-snug flex items-center gap-1.5">
+            <EventTypeIcon type={event.type} />
+            {event.title}
           </p>
           {event.topic && (
             <p className="text-subtle text-[13.5px] mt-0.5">Thema: {event.topic}</p>
