@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { createAnliegen } from "@/lib/actions/anliegen";
 import { createSuggestion, toggleVote } from "@/lib/actions/suggestions";
 import EmptyState from "@/components/EmptyState";
+import { HeartIcon, LightbulbIcon, PrayingHandsIcon, TargetIcon, ThumbsUpIcon } from "@/components/icons";
 
 type Anliegen = {
   id: string;
@@ -54,13 +55,13 @@ export default function AnliegenView({
 
       <div className="flex gap-1.5 border-b border-line -mx-1 px-1 overflow-x-auto">
         <TabButton active={tab === "need"} onClick={() => setTab("need")}>
-          🙏 Nöte
+          <PrayingHandsIcon className="h-4 w-4" /> Nöte
         </TabButton>
         <TabButton active={tab === "thanks"} onClick={() => setTab("thanks")}>
-          ❤️ Danksagungen
+          <HeartIcon className="h-4 w-4" /> Danksagungen
         </TabButton>
         <TabButton active={tab === "suggestions"} onClick={() => setTab("suggestions")}>
-          💡 Vorschläge
+          <LightbulbIcon className="h-4 w-4" /> Vorschläge
         </TabButton>
       </div>
 
@@ -137,7 +138,7 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-2.5 text-[14px] whitespace-nowrap border-b-2 -mb-px transition ${
+      className={`px-3 py-2.5 text-[14px] whitespace-nowrap border-b-2 -mb-px transition inline-flex items-center gap-1.5 ${
         active ? "border-ink text-ink font-medium" : "border-transparent text-subtle"
       }`}
     >
@@ -158,7 +159,7 @@ function SegButton({
   return (
     <button
       onClick={onClick}
-      className={`rounded-full px-3.5 py-1.5 text-[13.5px] font-medium border transition ${
+      className={`rounded-full px-3.5 py-1.5 text-[13.5px] font-medium border transition inline-flex items-center gap-1.5 ${
         active ? "bg-ink text-white border-ink" : "bg-white text-subtle border-line"
       }`}
     >
@@ -179,9 +180,13 @@ function List({
     <div className="space-y-3">
       {items.map((a) => (
         <div key={a.id} className="card p-4">
-          <p className="text-[15px] text-ink leading-relaxed">
-            {a.type === "need" ? "🙏 " : "❤️ "}
-            {a.content}
+          <p className="text-[15px] text-ink leading-relaxed flex items-start gap-1.5">
+            {a.type === "need" ? (
+              <PrayingHandsIcon className="h-4 w-4 mt-0.5 shrink-0" />
+            ) : (
+              <HeartIcon className="h-4 w-4 mt-0.5 shrink-0" />
+            )}
+            <span>{a.content}</span>
           </p>
           <p className="text-[13px] text-subtle mt-2.5">{a.displayName}</p>
         </div>
@@ -220,7 +225,7 @@ function SuggestionList({
                 : "bg-white text-ink border-line hover:bg-black/[0.02]"
             }`}
           >
-            <span>👍</span>
+            <ThumbsUpIcon className="h-4 w-4" />
             <span>{s.voteCount}</span>
           </button>
         </div>
@@ -289,10 +294,10 @@ function AnliegenForm({ onDone }: { onDone: () => void }) {
         <p className="label">Was möchtest du teilen?</p>
         <div className="flex gap-1.5">
           <SegButton active={type === "need"} onClick={() => setType("need")}>
-            🙏 Bitte / Not
+            <PrayingHandsIcon className="h-4 w-4" /> Bitte / Not
           </SegButton>
           <SegButton active={type === "thanks"} onClick={() => setType("thanks")}>
-            ❤️ Danksagung
+            <HeartIcon className="h-4 w-4" /> Danksagung
           </SegButton>
         </div>
       </div>
@@ -357,10 +362,10 @@ function SuggestionForm({ onDone }: { onDone: () => void }) {
         <p className="label">Art des Vorschlags</p>
         <div className="flex gap-1.5">
           <SegButton active={type === "topic"} onClick={() => setType("topic")}>
-            💡 Thema
+            <LightbulbIcon className="h-4 w-4" /> Thema
           </SegButton>
           <SegButton active={type === "activity"} onClick={() => setType("activity")}>
-            🎯 Aktivität
+            <TargetIcon className="h-4 w-4" /> Aktivität
           </SegButton>
         </div>
       </div>
