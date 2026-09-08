@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { getAdminDashboard } from "@/lib/actions/admin-dashboard";
 import AdminShell from "@/components/admin/AdminShell";
 import Link from "next/link";
-import { EVENT_TYPE_EMOJI, EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EVENT_TYPE_LABEL, formatDateRange } from "@/lib/format";
+import { EventTypeIcon } from "@/components/icons";
 
 export default async function AdminDashboardPage() {
   const group = await getAdminGroup();
@@ -24,8 +25,9 @@ export default async function AdminDashboardPage() {
                 {formatDateRange(data.nextEvent.startDate, data.nextEvent.endDate)}
                 {data.nextEvent.startTime && ` · ${data.nextEvent.startTime}`}
               </p>
-              <p className="text-[14px] text-subtle mt-0.5">
-                {EVENT_TYPE_EMOJI[data.nextEvent.type]} {data.nextEvent.title}
+              <p className="text-[14px] text-subtle mt-0.5 flex items-center gap-1.5">
+                <EventTypeIcon type={data.nextEvent.type} />
+                {data.nextEvent.title}
               </p>
               {data.nextEvent.requiresRegistration && (
                 <div className="flex gap-3 mt-3 text-[13.5px] text-subtle">
@@ -89,8 +91,9 @@ export default async function AdminDashboardPage() {
                     {formatDateRange(e.startDate, e.endDate)}
                     {e.startTime && ` · ${e.startTime}`}
                   </p>
-                  <p className="text-[14.5px] font-medium text-ink mt-0.5">
-                    {EVENT_TYPE_EMOJI[e.type]} {e.title}
+                  <p className="text-[14.5px] font-medium text-ink mt-0.5 flex items-center gap-1.5">
+                    <EventTypeIcon type={e.type} />
+                    {e.title}
                   </p>
                 </div>
                 <span className="pill bg-accent-soft text-accent-dark">
