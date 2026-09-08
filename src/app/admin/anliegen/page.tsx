@@ -4,6 +4,7 @@ import AdminShell from "@/components/admin/AdminShell";
 import { getAdminAnliegen } from "@/lib/actions/admin-moderation";
 import EmptyState from "@/components/EmptyState";
 import DeleteAnliegenButton from "./delete-button";
+import { HeartIcon, PrayingHandsIcon } from "@/components/icons";
 
 export default async function AdminAnliegenPage() {
   const group = await getAdminGroup();
@@ -22,9 +23,13 @@ export default async function AdminAnliegenPage() {
           {items.map((a) => (
             <div key={a.id} className="card p-4">
               <div className="flex items-start justify-between gap-3">
-                <p className="text-[15px] text-ink leading-relaxed">
-                  {a.type === "need" ? "🙏 " : "❤️ "}
-                  {a.content}
+                <p className="text-[15px] text-ink leading-relaxed flex items-start gap-1.5">
+                  {a.type === "need" ? (
+                    <PrayingHandsIcon className="h-4 w-4 mt-0.5 shrink-0" />
+                  ) : (
+                    <HeartIcon className="h-4 w-4 mt-0.5 shrink-0" />
+                  )}
+                  <span>{a.content}</span>
                 </p>
                 <DeleteAnliegenButton id={a.id} />
               </div>
