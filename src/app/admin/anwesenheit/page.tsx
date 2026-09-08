@@ -5,6 +5,7 @@ import { getGroupMeetingsForAttendance } from "@/lib/actions/admin-attendance";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import { formatDateRange } from "@/lib/format";
+import { BookIcon } from "@/components/icons";
 
 export default async function AdminAnwesenheitPage() {
   const group = await getAdminGroup();
@@ -31,7 +32,10 @@ export default async function AdminAnwesenheitPage() {
             >
               <div>
                 <p className="text-[13px] text-subtle">{formatDateRange(m.startDate, m.endDate)}</p>
-                <p className="text-[15px] font-medium text-ink mt-0.5">📖 {m.title}</p>
+                <p className="text-[15px] font-medium text-ink mt-0.5 flex items-center gap-1.5">
+                  <BookIcon />
+                  {m.title}
+                </p>
                 {m.topic && <p className="text-[13.5px] text-subtle mt-0.5">Thema: {m.topic}</p>}
               </div>
               <span className="text-subtle text-[13px]">Eintragen →</span>
